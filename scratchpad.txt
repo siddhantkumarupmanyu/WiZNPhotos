@@ -8,6 +8,8 @@ should I Test Drive the Custom Made Carousel or just integration test it with Fr
     - it will be tough and hard to test but it will be fun
     - to makes test suit faster what I can do is to disable this test in suit, since it should be already tested in fragment
         - IDK, if it's the best thing to do.
+    - since this is a specific case here, its better to just test with fragment,since its more of coupled to fragment
+        and there is not need to abstract anything, YAGNI
 
 rest API should be fetched only one
     - shouldFetch()
