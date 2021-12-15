@@ -1,6 +1,10 @@
 
 let's add the carousel first
-
+    - just found out I could just use viewpage2 since it's can take recyclerview adapter
+    - work made so easy
+    - now I just have to implement those dots thingy
+    - check the tests, how to fake the drag movements
+    - https://github.com/android/views-widgets-samples/tree/main/ViewPager2/app/src/androidTest/java/androidx/viewpager2/integration/testapp/test
 
 
 should I Test Drive the Custom Made Carousel or just integration test it with Fragment rather than with custom tests?
