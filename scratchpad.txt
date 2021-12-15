@@ -1,4 +1,7 @@
 
+let's add the carousel first
+
+
 
 should I Test Drive the Custom Made Carousel or just integration test it with Fragment rather than with custom tests?
     - it will be fun test driving it thought
