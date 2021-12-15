@@ -1,0 +1,14 @@
+
+
+should I Test Drive the Custom Made Carousel or just integration test it with Fragment rather than with custom tests?
+    - it will be fun test driving it thought
+    - it will be tough and hard to test but it will be fun
+    - to makes test suit faster what I can do is to disable this test in suit, since it should be already tested in fragment
+        - IDK, if it's the best thing to do.
+
+rest API should be fetched only one
+    - shouldFetch()
+        - if there are no items in Db
+
+Challenge Questions?
+- should data be star/delete be done from list too like on front page?
