@@ -1,5 +1,9 @@
 
 
+in case of Item Fragment Why Should I even Load everything
+    - just implement some kind of pagination
+    - load 10 items in front; 10 in back
+
 Item ViewModel update the items like this
     - sealed class with different types
         - LoadItems(items)
