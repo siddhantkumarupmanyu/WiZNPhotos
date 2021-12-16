@@ -1,4 +1,4 @@
-package sku.challenge.wiznphotos
+package sku.challenge.wiznphotos.ui
 
 import org.junit.Ignore
 import org.junit.Test

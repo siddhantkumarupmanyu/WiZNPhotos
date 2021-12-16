@@ -1,4 +1,4 @@
-package sku.challenge.wiznphotos
+package sku.challenge.wiznphotos.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

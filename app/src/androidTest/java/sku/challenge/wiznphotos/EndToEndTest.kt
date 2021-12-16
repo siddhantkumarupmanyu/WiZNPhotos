@@ -1,6 +1,11 @@
 package sku.challenge.wiznphotos
 
+import androidx.test.core.app.ActivityScenario
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import dagger.hilt.android.testing.BindValue
@@ -33,7 +38,7 @@ class EndToEndTest {
     @BindValue
     val baseUrl: BaseUrl = BaseUrl("http://127.0.0.1:8080")
 
-    @Inject
+    // @Inject
     lateinit var okHttpClient: OkHttpClient
 
     @Before
@@ -53,7 +58,11 @@ class EndToEndTest {
 
     @Test
     fun shouldHitRestApiOnlyOnce() {
+        val activityScenario = ActivityScenario.launch(MainActivity::class.java)
 
+        onView(listMatcher().atPosition(1)).check(matches(hasDescendant(withText("reprehenderit est deserunt velit ipsam"))))
+
+        activityScenario.close()
     }
 
     @Test

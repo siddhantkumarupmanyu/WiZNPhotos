@@ -1,4 +1,4 @@
-package sku.challenge.wiznphotos
+package sku.challenge.wiznphotos.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
+import sku.challenge.wiznphotos.R
 import sku.challenge.wiznphotos.databinding.FragmentItemBinding
 import sku.challenge.wiznphotos.vo.PhotoItem
 
