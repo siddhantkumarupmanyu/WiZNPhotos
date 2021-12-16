@@ -1,10 +1,26 @@
 
+
+use ListAdapter on front page/fragment
+use SimpleAdapter on Item Page/fragment
+    - use notifyItem to notify about itemChange
+
+Should I include paging?
+    - there are about 4000 items from API
+    - task does not say anything, about including pagination though
+    - I will just avoid it for now.
+        - even if they are so many they will at most consume 10MB which I don't think is a issue, right now
+        - so, avoiding premature optimization
+
 let's add the carousel first
     - just found out I could just use viewpage2 since it's can take recyclerview adapter
     - work made so easy
     - now I just have to implement those dots thingy
-    - check the tests, how to fake the drag movements
+    - check the tests, how to fake the drag movements?
+        - should I be concerned about this? Since I think viewPager2 already handles them. I just have to test if clicking side buttons works
+        - skipping this
     - https://github.com/android/views-widgets-samples/tree/main/ViewPager2/app/src/androidTest/java/androidx/viewpager2/integration/testapp/test
+    - for now, not going in details/implementations of viewPager2, it has too many working parts
+        - assuming it just works, works magically
 
 
 should I Test Drive the Custom Made Carousel or just integration test it with Fragment rather than with custom tests?
