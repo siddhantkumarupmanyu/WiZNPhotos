@@ -7,8 +7,8 @@ import sku.challenge.wiznphotos.vo.PhotoItem
 
 // lack of better Name
 class PhotoRepositoryImpl(
-    private val dao: PhotosDao,
-    private val api: ApiService
+    private val api: ApiService,
+    private val dao: PhotosDao
 ) : PhotoRepository {
 
 

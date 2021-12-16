@@ -17,7 +17,7 @@ class PhotoRepositoryImplTest {
 
     private val api = mock<ApiService>()
 
-    private val repository = PhotoRepositoryImpl(dao, api)
+    private val repository = PhotoRepositoryImpl(api, dao)
 
 
     private val photoItems = DummyData.photoItems(1, 10)
