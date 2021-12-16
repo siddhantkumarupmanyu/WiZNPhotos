@@ -6,7 +6,7 @@ import org.junit.Test
 class ItemFragmentTest {
 
 
-    // TODO: add the tests here after spiking
+    // TODO: add the tests after spiking
 
     @Test
     fun shouldLoadRequiredItem() {
@@ -23,6 +23,15 @@ class ItemFragmentTest {
     @Ignore
     fun showPreviousItem_WhenClickedOnLeftArrow() {
 
+    }
+
+    @Test
+    @Ignore
+    fun paginationIsWorking() {
+        // multiple Next page clicks
+        // it will slow the tests down by a large factor
+        // IDK, if I should include it in suit or even just test it manually
+        // not sure
     }
 
     @Test
