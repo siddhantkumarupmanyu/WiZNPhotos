@@ -18,6 +18,8 @@ class ItemFragment : Fragment() {
     private val binding: FragmentItemBinding
         get() = _binding!!
 
+    private lateinit var adapter: ViewPagerItemAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,6 +39,8 @@ class ItemFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
 
+        adapter = ViewPagerItemAdapter()
+        binding.pager.adapter = adapter
 
     }
 
