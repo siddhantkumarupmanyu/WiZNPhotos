@@ -14,6 +14,8 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
+import org.hamcrest.MatcherAssert
+import org.hamcrest.core.Is.`is`
 import org.junit.*
 import org.junit.runner.RunWith
 import sku.challenge.wiznphotos.di.BaseUrl
@@ -21,7 +23,7 @@ import sku.challenge.wiznphotos.di.ConstantsModule
 import sku.challenge.wiznphotos.test_utils.OkHttp3IdlingResource
 import sku.challenge.wiznphotos.test_utils.RecyclerViewMatcher
 import sku.challenge.wiznphotos.test_utils.enqueueResponse
-import javax.inject.Inject
+import java.util.concurrent.TimeUnit
 
 
 @LargeTest
@@ -60,6 +62,8 @@ class EndToEndTest {
     fun shouldHitRestApiOnlyOnce() {
         val activityScenario = ActivityScenario.launch(MainActivity::class.java)
 
+        assertRequest("/photos")
+
         onView(listMatcher().atPosition(1)).check(matches(hasDescendant(withText("reprehenderit est deserunt velit ipsam"))))
 
         activityScenario.close()
@@ -76,6 +80,11 @@ class EndToEndTest {
     private fun setupRetrofitClient() {
         val resource = OkHttp3IdlingResource.create("okHttp", okHttpClient)
         IdlingRegistry.getInstance().register(resource)
+    }
+
+    private fun assertRequest(path: String) {
+        val request = mockWebServer.takeRequest(2, TimeUnit.SECONDS)
+        MatcherAssert.assertThat(request.path, `is`(path))
     }
 
 }
