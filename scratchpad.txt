@@ -1,5 +1,11 @@
 
 
+Item ViewModel update the items like this
+    - sealed class with different types
+        - LoadItems(items)
+        - UpdateItem(items; itemUpdatedAt)
+        - DeleteItem(newItems; itemDeletedAt)
+
 use ListAdapter on front page/fragment
 use SimpleAdapter on Item Page/fragment
     - use notifyItem to notify about itemChange
