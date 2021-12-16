@@ -14,6 +14,8 @@ import sku.challenge.wiznphotos.vo.PhotoItem
 @AndroidEntryPoint
 class ItemFragment : Fragment() {
 
+    // TODO
+
     private var _binding: FragmentItemBinding? = null
 
     private val binding: FragmentItemBinding
@@ -48,7 +50,7 @@ class ItemFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
 
-        adapter = ViewPagerItemAdapter()
+        // adapter = ViewPagerItemAdapter()
         binding.pager.adapter = adapter
     }
 
