@@ -6,17 +6,19 @@ import androidx.recyclerview.widget.RecyclerView
 import sku.challenge.wiznphotos.databinding.HorizontalListItemBinding
 import sku.challenge.wiznphotos.vo.PhotoItem
 
-// TODO: rename to ViewPagerPagedAdapter
-//  actually I should extract that paged functionality to differentClass
-class ViewPagerItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var items = (0 until (100)).map { id: Int ->
-        PhotoItem(
-            id,
-            "title: $id",
-            "https://example.com/dummy/$id.jpg"
-        )
-    }
+private const val PAGE_SIZE = 10
+
+class ViewPagerItemAdapter(
+    private val paginationCallback: PaginationCallback
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    // should I replace List with array, since can
+    private var previousItems = listOf<PhotoItem>()
+    private var currentItems = listOf<PhotoItem>()
+    private var nextItems = listOf<PhotoItem>()
+
+    private var totalItems: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ViewPagerItemHolder(
@@ -29,11 +31,38 @@ class ViewPagerItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder as ViewPagerItemHolder
 
-        holder.bind(items[position])
+        val currentItemPosition = position % currentItems.size
+        val item: PhotoItem = currentItems[currentItemPosition]
+
+        if (currentItemPosition == 0) {
+            // load Previous
+            currentItems = previousItems
+            paginationCallback.loadPrevious(PAGE_SIZE)
+        } else if (currentItemPosition == 1) {
+            // load next
+            currentItems = nextItems
+            paginationCallback.loadNext(PAGE_SIZE)
+        }
+
+        holder.bind(item)
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return totalItems
+    }
+
+    fun setPreviousItems() {
+        TODO()
+    }
+
+    fun setCurrentItems(currentItems: List<PhotoItem>, totalItems: Int) {
+        TODO()
+        this.totalItems = totalItems
+        notifyDataSetChanged()
+    }
+
+    fun setNextItems() {
+        TODO()
     }
 
     class ViewPagerItemHolder(

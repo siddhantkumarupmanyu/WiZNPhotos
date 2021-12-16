@@ -1,5 +1,11 @@
 
 
+i think we can't control how many items recyclerview Bind.
+    - going to just bind more than enough.
+
+should I create/apply Mediator pattern with ViewPagerItemAdapter
+    - cause I need to use getCurrentItem() of viewPager2
+
 in case of Item Fragment Why Should I even Load everything
     - just implement some kind of pagination
     - load 10 items in front; 10 in back
