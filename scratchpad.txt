@@ -3,6 +3,9 @@
 use ListAdapter on front page/fragment
 use SimpleAdapter on Item Page/fragment
     - use notifyItem to notify about itemChange
+        - i am not sure if I am following Unidirectional data flow(UDF)
+            - https://developer.android.com/jetpack/guide/ui-layer
+            - what I can say, this is in theory implementation is always a bit different
 
 Should I include paging?
     - there are about 4000 items from API
