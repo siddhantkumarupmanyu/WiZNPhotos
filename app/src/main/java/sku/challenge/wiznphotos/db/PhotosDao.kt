@@ -9,16 +9,20 @@ import sku.challenge.wiznphotos.vo.PhotoItem
 abstract class PhotosDao {
 
     @Insert
-    abstract fun insertPhotoItems(vararg photos: PhotoItem)
+    abstract suspend fun insertPhotoItems(vararg photos: PhotoItem)
 
     @Query("SELECT * FROM photoitem")
     abstract fun getPhotos(): Flow<List<PhotoItem>>
 
     @Delete
-    abstract fun deletePhotoItem(item: PhotoItem)
+    abstract suspend fun deleteItem(item: PhotoItem)
 
     @Update
-    abstract fun updateItem(updatedItem: PhotoItem)
+    abstract suspend fun updateItem(updatedItem: PhotoItem)
+
+
+    @Query("SELECT COUNT(*) FROM photoitem")
+    abstract suspend fun getCount(): Int
 
 
 }

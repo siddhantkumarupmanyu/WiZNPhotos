@@ -32,6 +32,8 @@ class PhotosDaoTest : DbTest() {
 
         assertThat(photos[0], `is`(equalTo(item1)))
         assertThat(photos[1], `is`(equalTo(item2)))
+
+        assertThat(photosDao.getCount(), `is`(2))
     }
 
     @Test
@@ -46,12 +48,14 @@ class PhotosDaoTest : DbTest() {
         assertThat(photos.size, `is`(2))
         assertThat(photos[0], `is`(equalTo(item1)))
 
-        photosDao.deletePhotoItem(item1)
+        photosDao.deleteItem(item1)
 
         photos = photosDao.getPhotos().first()
 
         assertThat(photos.size, `is`(1))
         assertThat(photos[0], `is`(equalTo(item2)))
+
+        assertThat(photosDao.getCount(), `is`(1))
     }
 
     @Test
@@ -72,6 +76,8 @@ class PhotosDaoTest : DbTest() {
 
         assertThat(photos[0], `is`(equalTo(item1.copy(isBookmarked = true))))
         assertThat(photos[1], `is`(equalTo(item2)))
+
+        assertThat(photosDao.getCount(), `is`(2))
     }
 
 }
