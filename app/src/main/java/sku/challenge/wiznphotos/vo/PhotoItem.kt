@@ -10,4 +10,11 @@ data class PhotoItem(
     val title: String,
     val url: String,
     val isBookmarked: Boolean = false
-)
+) {
+
+    companion object {
+
+        var EMPTY_ITEM = PhotoItem(-1, "", "", false)
+
+    }
+}

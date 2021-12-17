@@ -64,6 +64,13 @@ class PhotoRepositoryImplTest {
     }
 
     @Test
+    fun getItem() = runTest {
+        repository.getItem(1)
+
+        verify(dao).getItem(1)
+    }
+
+    @Test
     fun loadNextItem() = runTest {
         val item = PhotoItem(1, "title", "https://example.com/p/1")
         setUpDaoFake(item)

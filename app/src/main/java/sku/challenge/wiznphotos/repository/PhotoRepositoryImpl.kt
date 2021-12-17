@@ -28,6 +28,10 @@ class PhotoRepositoryImpl(
         dao.updateItem(item.copy(isBookmarked = true))
     }
 
+    override suspend fun getItem(id: Int): PhotoItem {
+        return dao.getItem(id)
+    }
+
 
     // todo: should refactor these two functions and make them clean
 

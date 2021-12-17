@@ -11,6 +11,8 @@ interface PhotoRepository {
 
     suspend fun bookmarkItem(item: PhotoItem)
 
+    suspend fun getItem(id: Int): PhotoItem
+
     suspend fun loadNextItem(item: PhotoItem): PhotoItem
 
     suspend fun loadPreviousItem(item: PhotoItem): PhotoItem
