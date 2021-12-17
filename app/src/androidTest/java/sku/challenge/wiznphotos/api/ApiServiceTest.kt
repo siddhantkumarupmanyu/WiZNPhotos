@@ -45,14 +45,14 @@ class ApiServiceTest {
 
     @Test
     fun fetchPhotos() = runTest {
-        mockWebServer.enqueueResponse("photos.json")
+        mockWebServer.enqueueResponse("photos-short.json")
 
         val photos = service.fetchPhotos()
 
         val request = mockWebServer.takeRequest(2, TimeUnit.SECONDS)
         assertThat(request.path, `is`("/photos"))
 
-        assertThat(photos.size, `is`(5000))
+        assertThat(photos.size, `is`(100))
 
         assertPhotoItem(
             photos[0],
