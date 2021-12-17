@@ -4,8 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -25,10 +24,7 @@ import org.mockito.Mockito.`when`
 import sku.challenge.wiznphotos.R
 import sku.challenge.wiznphotos.di.AppModule
 import sku.challenge.wiznphotos.repository.PhotoRepository
-import sku.challenge.wiznphotos.test_utils.DataBindingIdlingResourceRule
-import sku.challenge.wiznphotos.test_utils.DummyData
-import sku.challenge.wiznphotos.test_utils.launchFragmentInHiltContainer
-import sku.challenge.wiznphotos.test_utils.mock
+import sku.challenge.wiznphotos.test_utils.*
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
@@ -54,11 +50,6 @@ class ListFragmentTest {
     fun setUp() = runTest {
         // Populate @Inject fields in test class
         hiltRule.inject()
-
-        launchFragmentInHiltContainer<ListFragment> {
-            dataBindingIdlingResourceRule.monitorFragment(this)
-            Navigation.setViewNavController(requireView(), navController)
-        }
     }
 
     @Test
@@ -71,11 +62,18 @@ class ListFragmentTest {
             emit(items)
         })
 
+        launchFragmentInHiltContainer<ListFragment> {
+            dataBindingIdlingResourceRule.monitorFragment(this)
+            Navigation.setViewNavController(requireView(), navController)
+        }
+
         onView(withId(R.id.progress_indicator)).check(matches(isDisplayed()))
 
-        delay(100L)
+        delay(200L)
 
         onView(withId(R.id.progress_indicator)).check(matches(not(isDisplayed())))
+
+        onView(listMatcher().atPosition(1)).check(matches(hasDescendant(withText("title: 2"))))
     }
 
     // @Test
@@ -83,5 +81,5 @@ class ListFragmentTest {
     //
     // }
 
-    // progress bar while loading
+    private fun listMatcher() = RecyclerViewMatcher(R.id.list_view)
 }
