@@ -32,4 +32,11 @@ abstract class PhotosDao {
     @Query("SELECT * FROM photoitem WHERE id = :id")
     protected abstract fun getItemImpl(id: Int): PhotoItem?
 
+
+    @Query("SELECT MAX(id) FROM photoitem")
+    abstract fun maxId(): Int
+
+    @Query("SELECT MIN(id) FROM photoitem")
+    abstract fun minId(): Int
+
 }

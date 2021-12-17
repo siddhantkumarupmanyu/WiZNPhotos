@@ -35,6 +35,17 @@ class PhotosDaoTest : DbTest() {
     }
 
     @Test
+    fun minAndMaxId() = runTest {
+        val item1 = PhotoItem(1, "title1", "https://exmample.com/photos/1")
+        val item2 = PhotoItem(10, "title2", "https://exmample.com/photos/2")
+
+        photosDao.insertPhotoItems(item1, item2)
+
+        assertThat(photosDao.maxId(), `is`(10))
+        assertThat(photosDao.minId(), `is`(1))
+    }
+
+    @Test
     fun insertPhotoItems() = runTest {
         val item1 = PhotoItem(1, "title1", "https://exmample.com/photos/1")
         val item2 = PhotoItem(2, "title2", "https://exmample.com/photos/2")
