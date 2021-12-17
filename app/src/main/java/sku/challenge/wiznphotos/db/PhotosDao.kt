@@ -25,4 +25,11 @@ abstract class PhotosDao {
     abstract suspend fun getCount(): Int
 
 
+    fun getItem(id: Int): PhotoItem {
+        return getItemImpl(id) ?: PhotoItem.EMPTY_ITEM
+    }
+
+    @Query("SELECT * FROM photoitem WHERE id = :id")
+    protected abstract fun getItemImpl(id: Int): PhotoItem?
+
 }

@@ -22,6 +22,19 @@ class PhotosDaoTest : DbTest() {
         get() = db.photosDao()
 
     @Test
+    fun getItem() = runTest {
+        val item1 = PhotoItem(1, "title1", "https://exmample.com/photos/1")
+
+        photosDao.insertPhotoItems(item1)
+
+        val photo = photosDao.getItem(1)
+
+        assertThat(photo, `is`(equalTo(item1)))
+
+        assertThat(photosDao.getItem(2), `is`(PhotoItem.EMPTY_ITEM))
+    }
+
+    @Test
     fun insertPhotoItems() = runTest {
         val item1 = PhotoItem(1, "title1", "https://exmample.com/photos/1")
         val item2 = PhotoItem(2, "title2", "https://exmample.com/photos/2")
