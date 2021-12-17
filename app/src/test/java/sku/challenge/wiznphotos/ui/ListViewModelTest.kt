@@ -52,19 +52,19 @@ class ListViewModelTest {
         yield()
 
         assertThat(
-            viewModel.photoItems.first(),
-            IsInstanceOf(ListViewModel.PhotoResult.Loading::class.java)
+            viewModel.photosItems.first(),
+            IsInstanceOf(ListViewModel.PhotosResult.Loading::class.java)
         )
 
         delay(50L)
 
         assertThat(
-            viewModel.photoItems.first(),
-            IsInstanceOf(ListViewModel.PhotoResult.Success::class.java)
+            viewModel.photosItems.first(),
+            IsInstanceOf(ListViewModel.PhotosResult.Success::class.java)
         )
 
         assertThat(
-            (viewModel.photoItems.first() as ListViewModel.PhotoResult.Success).data,
+            (viewModel.photosItems.first() as ListViewModel.PhotosResult.Success).data,
             `is`(equalTo(items))
         )
 

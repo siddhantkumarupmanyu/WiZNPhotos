@@ -6,9 +6,6 @@ import org.junit.Test
 class ItemFragmentTest {
 
 
-
-
-
     @Test
     fun shouldLoadRequiredItem() {
 
@@ -48,6 +45,13 @@ class ItemFragmentTest {
     @Ignore
     fun shouldStarItem() {
 
+    }
+
+    @Test
+    @Ignore
+    fun shouldNavigateBackIfThereAreNoMoreDataAfterDeletion() {
+        // todo:
+        // will do it later
     }
 
 }

@@ -54,10 +54,10 @@ class ListFragment : Fragment() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                listViewModel.photoItems.collect { result ->
+                listViewModel.photosItems.collect { result ->
                     when (result) {
-                        is ListViewModel.PhotoResult.Loading -> showProgressBar()
-                        is ListViewModel.PhotoResult.Success -> updateList(result.data)
+                        is ListViewModel.PhotosResult.Loading -> showProgressBar()
+                        is ListViewModel.PhotosResult.Success -> updateList(result.data)
                     }
                 }
             }

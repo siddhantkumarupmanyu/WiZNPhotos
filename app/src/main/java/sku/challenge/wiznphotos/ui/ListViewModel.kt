@@ -16,16 +16,16 @@ class ListViewModel @Inject constructor(
     private val repository: PhotoRepository
 ) : ViewModel() {
 
-    private val _photoItems: MutableStateFlow<PhotoResult> =
-        MutableStateFlow(PhotoResult.Success(listOf()))
+    private val _photosItems: MutableStateFlow<PhotosResult> =
+        MutableStateFlow(PhotosResult.Success(listOf()))
 
-    val photoItems: StateFlow<PhotoResult> = _photoItems
+    val photosItems: StateFlow<PhotosResult> = _photosItems
 
     init {
         viewModelScope.launch {
-            _photoItems.value = PhotoResult.Loading
+            _photosItems.value = PhotosResult.Loading
             repository.loadItems().collect {
-                _photoItems.value = PhotoResult.Success(it)
+                _photosItems.value = PhotosResult.Success(it)
             }
         }
     }
@@ -42,9 +42,9 @@ class ListViewModel @Inject constructor(
         }
     }
 
-    sealed class PhotoResult {
-        class Success(val data: List<PhotoItem>) : PhotoResult()
-        object Loading : PhotoResult()
+    sealed class PhotosResult {
+        class Success(val data: List<PhotoItem>) : PhotosResult()
+        object Loading : PhotosResult()
     }
 
 }
