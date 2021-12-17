@@ -1,5 +1,9 @@
 # WiZNPhotos
 
+[![tests](https://github.com/siddhantkumarupmanyu/WiZNPhotos/actions/workflows/tests.yml/badge.svg)](https://github.com/siddhantkumarupmanyu/WiZNPhotos/actions/workflows/tests.yml)
+
+https://user-images.githubusercontent.com/66074842/146529321-76d15231-0d72-4584-b4dc-bdc6b4cb28f3.mp4
+
 
 ## Features
 - Uses Coroutines, following Structured Concurrency Principles
