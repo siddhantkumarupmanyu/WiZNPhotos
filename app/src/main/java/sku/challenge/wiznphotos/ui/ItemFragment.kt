@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebSettings
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -11,6 +12,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -82,7 +86,20 @@ class ItemFragment : Fragment() {
     }
 
     private fun updateData(result: ItemViewModel.PhotoItemResult.Success) {
+
         binding.photoItem = result.currentItem
+
+        val url = GlideUrl(
+            result.currentItem.url, LazyHeaders.Builder()
+                .addHeader("User-Agent", WebSettings.getDefaultUserAgent(binding.imageView.context))
+                .build()
+        )
+        Glide.with(binding.imageView.context)
+            .load(url)
+            // .transition()
+            .placeholder(R.drawable.no_thumbnail)
+            .into(binding.imageView)
+
         binding.previousArrow.visibility =
             if (result.prevItemAvailable) View.VISIBLE else View.INVISIBLE
         binding.nextArrow.visibility =
