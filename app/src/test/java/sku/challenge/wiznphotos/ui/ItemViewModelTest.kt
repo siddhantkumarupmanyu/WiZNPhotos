@@ -27,6 +27,7 @@ import sku.challenge.wiznphotos.vo.PhotoItem
 @ExperimentalCoroutinesApi
 class ItemViewModelTest {
 
+    // todo: clean Up/refactor this class
 
     private val repository = mock<PhotoRepository>()
 
@@ -153,17 +154,37 @@ class ItemViewModelTest {
     }
 
     @Test
-    fun deleteItem() = runTest {
+    fun deleteItemLoadsNextItem() = runTest {
         val item1 = items[0]
+        val item2 = items[1]
+
         `when`(repository.getItem(1)).thenReturn(item1)
-        `when`(repository.loadNextItem(item1)).thenReturn(PhotoItem.EMPTY_ITEM)
+        `when`(repository.loadNextItem(item1)).thenReturn(item2)
         `when`(repository.loadPreviousItem(item1)).thenReturn(PhotoItem.EMPTY_ITEM)
+
+        `when`(repository.getItem(2)).thenReturn(item2)
+        `when`(repository.loadNextItem(item2)).thenReturn(PhotoItem.EMPTY_ITEM)
+        `when`(repository.loadPreviousItem(item2)).thenReturn(item1)
 
         viewModel.loadItem(1)
         yield()
 
         viewModel.deleteItem()
-        yield()
+        delay(20)
+
+        val result = viewModel.currentItem.first()
+
+        assertThat(result, IsInstanceOf(ItemViewModel.PhotoItemResult.Success::class.java))
+
+        val success = (result as ItemViewModel.PhotoItemResult.Success)
+
+        assertThat(
+            success.currentItem, `is`(
+                equalTo(
+                    item2
+                )
+            )
+        )
 
         verify(repository).deleteItem(item1)
     }
@@ -185,7 +206,7 @@ class ItemViewModelTest {
         viewModel.loadItem(1)
         yield()
 
-        viewModel.startItem()
+        viewModel.starItem()
         yield()
 
         verify(repository).bookmarkItem(item1)

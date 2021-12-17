@@ -71,8 +71,24 @@ class ItemFragment : Fragment() {
         }
 
         setUpArrows()
+        setUpDelete()
+        setUpStar()
 
         itemViewModel.loadItem(args.id)
+    }
+
+    private fun setUpStar() {
+        binding.starCheckbox.setOnClickListener {
+            binding.starCheckbox.isChecked = false
+            itemViewModel.starItem()
+        }
+    }
+
+    private fun setUpDelete() {
+        binding.deleteCheckbox.setOnClickListener {
+            binding.deleteCheckbox.isChecked = false
+            itemViewModel.deleteItem()
+        }
     }
 
     private fun setUpArrows() {
@@ -88,6 +104,7 @@ class ItemFragment : Fragment() {
     private fun updateData(result: ItemViewModel.PhotoItemResult.Success) {
 
         binding.photoItem = result.currentItem
+        binding.starCheckbox.isChecked = result.currentItem.isBookmarked
 
         val url = GlideUrl(
             result.currentItem.url, LazyHeaders.Builder()

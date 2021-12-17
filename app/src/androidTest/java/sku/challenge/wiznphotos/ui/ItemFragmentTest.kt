@@ -118,15 +118,29 @@ class ItemFragmentTest {
     }
 
     @Test
-    @Ignore
-    fun shouldDeleteItem() {
-        // end to end test should take care of this case
+    fun showNextItemOnDeletion(): Unit = runBlocking {
+        val args = ItemFragmentArgs(5).toBundle()
+        launchFragmentInHiltContainer<ItemFragment>(fragmentArgs = args, action = {
+            dataBindingIdlingResourceRule.monitorFragment(this)
+            Navigation.setViewNavController(requireView(), navController)
+        })
+
+        onView(withId(R.id.delete_checkbox)).perform(click())
+
+        onView(withId(R.id.title_textview)).check(matches(withText("title: 6")))
     }
 
     @Test
-    @Ignore
     fun shouldStarItem() {
-        // end to end test should take care of this case
+        val args = ItemFragmentArgs(5).toBundle()
+        launchFragmentInHiltContainer<ItemFragment>(fragmentArgs = args, action = {
+            dataBindingIdlingResourceRule.monitorFragment(this)
+            Navigation.setViewNavController(requireView(), navController)
+        })
+
+        onView(withId(R.id.star_checkbox)).perform(click())
+
+        onView(withId(R.id.star_checkbox)).check(matches(isChecked()))
     }
 
     @Test
@@ -146,18 +160,25 @@ class ItemFragmentTest {
         }
 
         override suspend fun deleteItem(item: PhotoItem) {
-            // val list = mutableListOf(items)
-            // list.removeAt(item.id - 1)
+            val list = mutableListOf<PhotoItem>()
+            list.addAll(items)
+            list.removeAt(item.id - 1)
+            items = list
         }
 
         override suspend fun bookmarkItem(item: PhotoItem) {
-            // val list = mutableListOf(items)
-            // list.removeAt(item.id - 1)
-            // list.add(item.id - 1, item.copy())
+            val list = mutableListOf<PhotoItem>()
+            list.addAll(items)
+            val index = list.indexOf(item)
+            list.removeAt(index)
+            list.add(index, item.copy(isBookmarked = !item.isBookmarked))
+            items = list
         }
 
         override suspend fun getItem(id: Int): PhotoItem {
-            return items[id - 1]
+            return items.single {
+                it.id == id
+            }
         }
 
         override suspend fun loadNextItem(item: PhotoItem): PhotoItem {

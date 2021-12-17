@@ -12,6 +12,8 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
 import org.hamcrest.MatcherAssert
@@ -24,6 +26,7 @@ import sku.challenge.wiznphotos.test_utils.OkHttp3IdlingResource
 import sku.challenge.wiznphotos.test_utils.RecyclerViewMatcher
 import sku.challenge.wiznphotos.test_utils.enqueueResponse
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 
 @LargeTest
@@ -40,7 +43,7 @@ class EndToEndTest {
     @BindValue
     val baseUrl: BaseUrl = BaseUrl("http://127.0.0.1:8080")
 
-    // @Inject
+    @Inject
     lateinit var okHttpClient: OkHttpClient
 
     @Before
@@ -50,7 +53,7 @@ class EndToEndTest {
         setupRetrofitClient()
 
         mockWebServer.start(8080)
-        mockWebServer.enqueueResponse("page1.json")
+        mockWebServer.enqueueResponse("photos.json")
     }
 
     @After
@@ -59,11 +62,23 @@ class EndToEndTest {
     }
 
     @Test
-    fun shouldHitRestApiOnlyOnce() {
-        val activityScenario = ActivityScenario.launch(MainActivity::class.java)
+    fun shouldHitRestApiOnlyOnce() = runBlocking {
+        var activityScenario = ActivityScenario.launch(MainActivity::class.java)
 
         assertRequest("/photos")
 
+        delay(300)
+        onView(listMatcher().atPosition(1)).check(matches(hasDescendant(withText("reprehenderit est deserunt velit ipsam"))))
+
+        activityScenario.close()
+
+
+
+        activityScenario = ActivityScenario.launch(MainActivity::class.java)
+
+        assertRequest("/photos")
+
+        delay(300)
         onView(listMatcher().atPosition(1)).check(matches(hasDescendant(withText("reprehenderit est deserunt velit ipsam"))))
 
         activityScenario.close()

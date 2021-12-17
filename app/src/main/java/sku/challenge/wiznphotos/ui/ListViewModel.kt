@@ -30,6 +30,9 @@ class ListViewModel @Inject constructor(
         }
     }
 
+    // todo: these two functions shouldn't even be here fix them
+
+
     fun bookmarkItem(item: PhotoItem) {
         viewModelScope.launch {
             repository.bookmarkItem(item)

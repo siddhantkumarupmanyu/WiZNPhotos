@@ -25,7 +25,6 @@ class ItemViewModel @Inject constructor(
     fun loadItem(id: Int) {
         viewModelScope.launch {
             _currentItem.value = PhotoItemResult.Loading
-
             val currentItem = repository.getItem(id)
             nextItem = repository.loadNextItem(currentItem)
             prevItem = repository.loadPreviousItem(currentItem)
@@ -47,10 +46,13 @@ class ItemViewModel @Inject constructor(
     }
 
 
-    fun startItem() {
+    fun starItem() {
         viewModelScope.launch {
             val currentItem = (currentItem.value as PhotoItemResult.Success).currentItem
             repository.bookmarkItem(currentItem)
+
+            // should getItem() return a flow?? YAGNI for now
+            loadItem(currentItem.id)
         }
     }
 
@@ -58,6 +60,7 @@ class ItemViewModel @Inject constructor(
         viewModelScope.launch {
             val currentItem = (currentItem.value as PhotoItemResult.Success).currentItem
             repository.deleteItem(currentItem)
+            loadNextItem()
         }
     }
 
