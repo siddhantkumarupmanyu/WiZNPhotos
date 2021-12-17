@@ -15,6 +15,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -24,8 +25,6 @@ import sku.challenge.wiznphotos.databinding.FragmentItemBinding
 
 @AndroidEntryPoint
 class ItemFragment : Fragment() {
-
-    // TODO
 
     private var _binding: FragmentItemBinding? = null
 
@@ -54,9 +53,6 @@ class ItemFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.lifecycleOwner = viewLifecycleOwner
-
-        // adapter = ViewPagerItemAdapter()
-        // binding.pager.adapter = adapter
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -113,7 +109,7 @@ class ItemFragment : Fragment() {
         )
         Glide.with(binding.imageView.context)
             .load(url)
-            // .transition()
+            .transition(DrawableTransitionOptions.withCrossFade())
             .placeholder(R.drawable.no_thumbnail)
             .into(binding.imageView)
 
