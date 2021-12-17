@@ -47,6 +47,7 @@ https://user-images.githubusercontent.com/66074842/146529321-76d15231-0d72-4584-
   * this will give a sliding functionality
 - implement pagination on ListFragment
   * loading 5000 items at once in memory is not optimized
+- back icon in Action when navigated to ItemFragment
 
 ### More Info
 see [scratchpad.txt](scratchpad.txt)
