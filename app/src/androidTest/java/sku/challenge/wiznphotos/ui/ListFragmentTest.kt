@@ -3,6 +3,7 @@ package sku.challenge.wiznphotos.ui
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -21,6 +22,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import sku.challenge.wiznphotos.R
 import sku.challenge.wiznphotos.di.AppModule
 import sku.challenge.wiznphotos.repository.PhotoRepository
@@ -76,10 +78,23 @@ class ListFragmentTest {
         onView(listMatcher().atPosition(1)).check(matches(hasDescendant(withText("title: 2"))))
     }
 
-    // @Test
-    // fun shouldNavigateToItemFragmentOnClick() {
-    //
-    // }
+    @Test
+    fun shouldNavigateToItemFragmentOnClick(): Unit = runBlocking {
+        `when`(repository.loadItems()).thenReturn(flow {
+            emit(items)
+        })
+
+        launchFragmentInHiltContainer<ListFragment> {
+            dataBindingIdlingResourceRule.monitorFragment(this)
+            Navigation.setViewNavController(requireView(), navController)
+        }
+
+        onView(listMatcher().atPosition(1)).check(matches(hasDescendant(withText("title: 2"))))
+
+        onView(listMatcher().atPosition(0)).perform(click())
+
+        verify(navController).navigate(ListFragmentDirections.actionToItemFragment())
+    }
 
     private fun listMatcher() = RecyclerViewMatcher(R.id.list_view)
 }

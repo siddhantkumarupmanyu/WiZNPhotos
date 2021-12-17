@@ -14,5 +14,9 @@
         android:id="@+id/listFragment"
         android:name="sku.challenge.wiznphotos.ui.ListFragment"
         android:label="ListFragment"
-        tools:layout="@layout/fragment_list"/>
+        tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/actionToItemFragment"
+            app:destination="@id/itemFragment" />
+    </fragment>
 </navigation>

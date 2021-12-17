@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -48,7 +49,7 @@ class ListFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.listView.adapter = ListViewAdapter {
-            // todo
+            findNavController().navigate(ListFragmentDirections.actionToItemFragment())
         }
 
         lifecycleScope.launch {
