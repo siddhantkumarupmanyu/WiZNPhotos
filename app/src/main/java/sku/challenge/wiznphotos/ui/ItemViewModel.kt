@@ -49,7 +49,7 @@ class ItemViewModel @Inject constructor(
     fun starItem() {
         viewModelScope.launch {
             val currentItem = (currentItem.value as PhotoItemResult.Success).currentItem
-            repository.bookmarkItem(currentItem)
+            repository.toggleBookmark(currentItem)
 
             // should getItem() return a flow?? YAGNI for now
             loadItem(currentItem.id)

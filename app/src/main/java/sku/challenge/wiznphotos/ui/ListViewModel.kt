@@ -35,7 +35,7 @@ class ListViewModel @Inject constructor(
 
     fun bookmarkItem(item: PhotoItem) {
         viewModelScope.launch {
-            repository.bookmarkItem(item)
+            repository.toggleBookmark(item)
         }
     }
 

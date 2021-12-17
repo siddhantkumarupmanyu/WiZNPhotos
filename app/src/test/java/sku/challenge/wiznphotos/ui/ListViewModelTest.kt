@@ -81,7 +81,7 @@ class ListViewModelTest {
         viewModel.bookmarkItem(item)
         yield()
 
-        verify(repository).bookmarkItem(item)
+        verify(repository).toggleBookmark(item)
     }
 
     @Test

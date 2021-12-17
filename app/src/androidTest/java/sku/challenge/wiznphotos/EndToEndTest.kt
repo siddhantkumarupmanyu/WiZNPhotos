@@ -104,6 +104,10 @@ class EndToEndTest {
 
         onView(ViewMatchers.withId(R.id.star_checkbox)).check(matches(ViewMatchers.isChecked()))
 
+        onView(ViewMatchers.withId(R.id.star_checkbox)).perform(click())
+
+        onView(ViewMatchers.withId(R.id.star_checkbox)).check(matches(ViewMatchers.isNotChecked()))
+
         onView(ViewMatchers.withId(R.id.delete_checkbox)).perform(click())
 
         onView(ViewMatchers.withId(R.id.title_textview)).check(matches(not(withText("reprehenderit est deserunt velit ipsam"))))

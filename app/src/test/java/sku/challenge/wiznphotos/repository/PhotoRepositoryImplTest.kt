@@ -48,11 +48,14 @@ class PhotoRepositoryImplTest {
     }
 
     @Test
-    fun shouldBookmarkItem() = runTest {
+    fun shouldToggleBookmark() = runTest {
         val item = PhotoItem(1, "title", "https://example.com/p/2")
-        repository.bookmarkItem(item)
+
+        repository.toggleBookmark(item)
+        repository.toggleBookmark(item.copy(isBookmarked = true))
 
         verify(dao).updateItem(item.copy(isBookmarked = true))
+        verify(dao).updateItem(item.copy(isBookmarked = false))
     }
 
     @Test

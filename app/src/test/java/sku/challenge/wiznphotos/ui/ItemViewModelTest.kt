@@ -209,7 +209,7 @@ class ItemViewModelTest {
         viewModel.starItem()
         yield()
 
-        verify(repository).bookmarkItem(item1)
+        verify(repository).toggleBookmark(item1)
     }
 
 }

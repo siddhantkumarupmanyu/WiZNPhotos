@@ -166,7 +166,7 @@ class ItemFragmentTest {
             items = list
         }
 
-        override suspend fun bookmarkItem(item: PhotoItem) {
+        override suspend fun toggleBookmark(item: PhotoItem) {
             val list = mutableListOf<PhotoItem>()
             list.addAll(items)
             val index = list.indexOf(item)

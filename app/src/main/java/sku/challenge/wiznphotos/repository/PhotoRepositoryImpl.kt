@@ -24,9 +24,8 @@ class PhotoRepositoryImpl(
         dao.deleteItem(item)
     }
 
-    override suspend fun bookmarkItem(item: PhotoItem) {
-        // TODO: fix this
-        dao.updateItem(item.copy(isBookmarked = true))
+    override suspend fun toggleBookmark(item: PhotoItem) {
+        dao.updateItem(item.copy(isBookmarked = !item.isBookmarked))
     }
 
     override suspend fun getItem(id: Int): PhotoItem {

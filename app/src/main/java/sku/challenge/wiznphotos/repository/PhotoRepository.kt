@@ -9,7 +9,7 @@ interface PhotoRepository {
 
     suspend fun deleteItem(item: PhotoItem)
 
-    suspend fun bookmarkItem(item: PhotoItem)
+    suspend fun toggleBookmark(item: PhotoItem)
 
     suspend fun getItem(id: Int): PhotoItem
 
