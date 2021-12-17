@@ -100,7 +100,7 @@ class PhotoRepositoryImplTest {
         verify(dao, never()).getItem(0)
     }
 
-    private fun setUpDaoFake(item: PhotoItem) {
+    private suspend fun setUpDaoFake(item: PhotoItem) {
         `when`(dao.maxId()).thenReturn(6)
         `when`(dao.minId()).thenReturn(1)
         `when`(dao.getItem(0)).thenReturn(
@@ -115,7 +115,7 @@ class PhotoRepositoryImplTest {
         `when`(dao.getItem(3)).thenReturn( // third item is deleted
             PhotoItem.EMPTY_ITEM
         )
-        `when`(dao.getItem(4)).thenReturn( // third item is deleted
+        `when`(dao.getItem(4)).thenReturn( // fourth item is deleted
             PhotoItem.EMPTY_ITEM
         )
         `when`(dao.getItem(5)).thenReturn(

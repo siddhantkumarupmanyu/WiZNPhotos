@@ -25,18 +25,18 @@ abstract class PhotosDao {
     abstract suspend fun getCount(): Int
 
 
-    fun getItem(id: Int): PhotoItem {
+    suspend fun getItem(id: Int): PhotoItem {
         return getItemImpl(id) ?: PhotoItem.EMPTY_ITEM
     }
 
     @Query("SELECT * FROM photoitem WHERE id = :id")
-    protected abstract fun getItemImpl(id: Int): PhotoItem?
+    protected abstract suspend fun getItemImpl(id: Int): PhotoItem?
 
 
     @Query("SELECT MAX(id) FROM photoitem")
-    abstract fun maxId(): Int
+    abstract suspend fun maxId(): Int
 
     @Query("SELECT MIN(id) FROM photoitem")
-    abstract fun minId(): Int
+    abstract suspend fun minId(): Int
 
 }
