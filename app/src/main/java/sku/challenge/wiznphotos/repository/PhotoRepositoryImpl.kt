@@ -27,4 +27,45 @@ class PhotoRepositoryImpl(
     override suspend fun bookmarkItem(item: PhotoItem) {
         dao.updateItem(item.copy(isBookmarked = true))
     }
+
+
+    // todo: should refactor these two functions and make them clean
+
+    override suspend fun loadNextItem(item: PhotoItem): PhotoItem {
+        // todo: fail fast id is less than min id or max than min id
+
+        val minId = dao.minId()
+        val maxId = dao.maxId()
+
+        var nextItem = PhotoItem.EMPTY_ITEM
+
+        for (i in (item.id + 1)..maxId) {
+            val currentItem = dao.getItem(i)
+            if (currentItem != PhotoItem.EMPTY_ITEM) {
+                nextItem = currentItem
+                break
+            }
+        }
+        // we have reached the end and could not find any item return empty Item
+        return nextItem
+    }
+
+    override suspend fun loadPreviousItem(item: PhotoItem): PhotoItem {
+        // todo: fail fast id is less than min id or max than min id
+
+        val minId = dao.minId()
+        val maxId = dao.maxId()
+
+        var nextItem = PhotoItem.EMPTY_ITEM
+
+        for (i in (item.id - 1) downTo minId) {
+            val currentItem = dao.getItem(i)
+            if (currentItem != PhotoItem.EMPTY_ITEM) {
+                nextItem = currentItem
+                break
+            }
+        }
+        // we have reached the end and could not find any item return empty Item
+        return nextItem
+    }
 }
