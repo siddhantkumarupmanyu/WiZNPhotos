@@ -9,7 +9,11 @@
         android:id="@+id/itemFragment"
         android:name="sku.challenge.wiznphotos.ui.ItemFragment"
         android:label="fragment_item"
-        tools:layout="@layout/fragment_item" />
+        tools:layout="@layout/fragment_item" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/listFragment"
         android:name="sku.challenge.wiznphotos.ui.ListFragment"

@@ -1,50 +1,132 @@
 package sku.challenge.wiznphotos.ui
 
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
+import org.hamcrest.core.IsNot.not
+import org.junit.Before
 import org.junit.Ignore
+import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import sku.challenge.wiznphotos.R
+import sku.challenge.wiznphotos.di.AppModule
+import sku.challenge.wiznphotos.repository.PhotoRepository
+import sku.challenge.wiznphotos.test_utils.DataBindingIdlingResourceRule
+import sku.challenge.wiznphotos.test_utils.DummyData
+import sku.challenge.wiznphotos.test_utils.launchFragmentInHiltContainer
+import sku.challenge.wiznphotos.test_utils.mock
+import sku.challenge.wiznphotos.vo.PhotoItem
 
+@ExperimentalCoroutinesApi
+@RunWith(AndroidJUnit4::class)
+@UninstallModules(AppModule::class)
+@HiltAndroidTest
 class ItemFragmentTest {
 
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
+
+    @JvmField
+    @Rule
+    val dataBindingIdlingResourceRule = DataBindingIdlingResourceRule()
+
+    @BindValue
+    val repository: PhotoRepository = FakeRepository()
+
+    private val navController = mock<NavController>()
+
+    @Before
+    fun setUp() = runTest {
+        // Populate @Inject fields in test class
+        hiltRule.inject()
+
+    }
 
     @Test
     fun shouldLoadRequiredItem() {
+        val args = ItemFragmentArgs(4).toBundle()
+        launchFragmentInHiltContainer<ItemFragment>(fragmentArgs = args, action = {
+            dataBindingIdlingResourceRule.monitorFragment(this)
+            Navigation.setViewNavController(requireView(), navController)
+        })
 
+        onView(withId(R.id.title_textview)).check(matches(withText("title: 4")))
     }
 
     @Test
-    @Ignore
-    fun showNextItem_WhenClickedOnRightArrow() {
+    fun showNextItem_WhenClickedOnRightArrow(): Unit = runBlocking {
+        val args = ItemFragmentArgs(4).toBundle()
+        launchFragmentInHiltContainer<ItemFragment>(fragmentArgs = args, action = {
+            dataBindingIdlingResourceRule.monitorFragment(this)
+            Navigation.setViewNavController(requireView(), navController)
+        })
 
+        onView(withId(R.id.next_arrow)).perform(click())
+
+        delay(20)
+        onView(withId(R.id.title_textview)).check(matches(withText("title: 5")))
     }
 
     @Test
-    @Ignore
-    fun showPreviousItem_WhenClickedOnLeftArrow() {
+    fun showPreviousItem_WhenClickedOnLeftArrow(): Unit = runBlocking {
+        val args = ItemFragmentArgs(4).toBundle()
+        launchFragmentInHiltContainer<ItemFragment>(fragmentArgs = args, action = {
+            dataBindingIdlingResourceRule.monitorFragment(this)
+            Navigation.setViewNavController(requireView(), navController)
+        })
 
+        onView(withId(R.id.previous_arrow)).perform(click())
+
+        delay(20)
+        onView(withId(R.id.title_textview)).check(matches(withText("title: 3")))
     }
 
     @Test
-    @Ignore
     fun shouldNotShowPreviousArrowInCaseOfFirstItem() {
+        val args = ItemFragmentArgs(1).toBundle()
+        launchFragmentInHiltContainer<ItemFragment>(fragmentArgs = args, action = {
+            dataBindingIdlingResourceRule.monitorFragment(this)
+            Navigation.setViewNavController(requireView(), navController)
+        })
 
+        onView(withId(R.id.previous_arrow)).check(matches(not(isDisplayed())))
     }
 
     @Test
-    @Ignore
     fun shouldNotShowNextArrowInCaseOfLastItem() {
+        val args = ItemFragmentArgs(10).toBundle()
+        launchFragmentInHiltContainer<ItemFragment>(fragmentArgs = args, action = {
+            dataBindingIdlingResourceRule.monitorFragment(this)
+            Navigation.setViewNavController(requireView(), navController)
+        })
 
+        onView(withId(R.id.next_arrow)).check(matches(not(isDisplayed())))
     }
 
     @Test
     @Ignore
     fun shouldDeleteItem() {
-
+        // end to end test should take care of this case
     }
 
     @Test
     @Ignore
     fun shouldStarItem() {
-
+        // end to end test should take care of this case
     }
 
     @Test
@@ -52,6 +134,40 @@ class ItemFragmentTest {
     fun shouldNavigateBackIfThereAreNoMoreDataAfterDeletion() {
         // todo:
         // will do it later
+    }
+
+    class FakeRepository : PhotoRepository {
+
+        var items = DummyData.photoItems(1, 10)
+
+        override suspend fun loadItems(): Flow<List<PhotoItem>> {
+            // return flowOf(items)
+            TODO()
+        }
+
+        override suspend fun deleteItem(item: PhotoItem) {
+            // val list = mutableListOf(items)
+            // list.removeAt(item.id - 1)
+        }
+
+        override suspend fun bookmarkItem(item: PhotoItem) {
+            // val list = mutableListOf(items)
+            // list.removeAt(item.id - 1)
+            // list.add(item.id - 1, item.copy())
+        }
+
+        override suspend fun getItem(id: Int): PhotoItem {
+            return items[id - 1]
+        }
+
+        override suspend fun loadNextItem(item: PhotoItem): PhotoItem {
+            return items.getOrElse(item.id) { PhotoItem.EMPTY_ITEM }
+        }
+
+        override suspend fun loadPreviousItem(item: PhotoItem): PhotoItem {
+            return items.getOrElse(item.id - 2) { PhotoItem.EMPTY_ITEM }
+        }
+
     }
 
 }

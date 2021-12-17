@@ -60,7 +60,7 @@ class ListFragmentTest {
         // for this simple case let's give this responsibility to view only
 
         `when`(repository.loadItems()).thenReturn(flow {
-            delay(100L)
+            delay(200L)
             emit(items)
         })
 
@@ -93,7 +93,7 @@ class ListFragmentTest {
 
         onView(listMatcher().atPosition(0)).perform(click())
 
-        verify(navController).navigate(ListFragmentDirections.actionToItemFragment())
+        verify(navController).navigate(ListFragmentDirections.actionToItemFragment(1))
     }
 
     private fun listMatcher() = RecyclerViewMatcher(R.id.list_view)

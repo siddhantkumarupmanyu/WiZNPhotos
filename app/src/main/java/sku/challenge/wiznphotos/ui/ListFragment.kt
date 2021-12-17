@@ -49,7 +49,7 @@ class ListFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.listView.adapter = ListViewAdapter {
-            findNavController().navigate(ListFragmentDirections.actionToItemFragment())
+            findNavController().navigate(ListFragmentDirections.actionToItemFragment(it.id))
         }
 
         lifecycleScope.launch {

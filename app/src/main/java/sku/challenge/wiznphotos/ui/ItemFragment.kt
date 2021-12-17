@@ -6,10 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import sku.challenge.wiznphotos.R
 import sku.challenge.wiznphotos.databinding.FragmentItemBinding
-import sku.challenge.wiznphotos.vo.PhotoItem
 
 
 @AndroidEntryPoint
@@ -22,15 +28,9 @@ class ItemFragment : Fragment() {
     private val binding: FragmentItemBinding
         get() = _binding!!
 
-    private lateinit var adapter: ViewPagerItemAdapter
+    private val itemViewModel by viewModels<ItemViewModel>()
 
-    private var items = (0 until (100)).map { id: Int ->
-        PhotoItem(
-            id,
-            "title: $id",
-            "https://example.com/dummy/$id.jpg"
-        )
-    }
+    private val args by navArgs<ItemFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +53,40 @@ class ItemFragment : Fragment() {
 
         // adapter = ViewPagerItemAdapter()
         // binding.pager.adapter = adapter
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                itemViewModel.currentItem.collect { result ->
+                    when (result) {
+                        is ItemViewModel.PhotoItemResult.Loading -> {} // no op
+                        is ItemViewModel.PhotoItemResult.Success -> updateData(result)
+                        is ItemViewModel.PhotoItemResult.NoData -> TODO()
+                    }
+                }
+            }
+        }
+
+        setUpArrows()
+
+        itemViewModel.loadItem(args.id)
+    }
+
+    private fun setUpArrows() {
+        binding.nextArrow.setOnClickListener {
+            itemViewModel.loadNextItem()
+        }
+
+        binding.previousArrow.setOnClickListener {
+            itemViewModel.loadPreviousItem()
+        }
+    }
+
+    private fun updateData(result: ItemViewModel.PhotoItemResult.Success) {
+        binding.photoItem = result.currentItem
+        binding.previousArrow.visibility =
+            if (result.prevItemAvailable) View.VISIBLE else View.INVISIBLE
+        binding.nextArrow.visibility =
+            if (result.nextItemAvailable) View.VISIBLE else View.INVISIBLE
     }
 
     override fun onDestroyView() {
