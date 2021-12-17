@@ -5,7 +5,7 @@ import sku.challenge.wiznphotos.vo.PhotoItem
 
 interface ApiService {
 
-    @GET("/photos")
+    @GET("photos")
     suspend fun fetchPhotos(): List<PhotoItem>
 
 }

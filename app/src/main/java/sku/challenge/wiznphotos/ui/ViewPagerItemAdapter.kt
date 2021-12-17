@@ -46,7 +46,7 @@ class ViewPagerItemAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: PhotoItem) {
-            binding.photoItem = item
+            // binding.photoItem = item
 
             binding.executePendingBindings()
         }

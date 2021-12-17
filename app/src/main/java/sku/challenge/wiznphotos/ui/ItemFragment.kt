@@ -52,7 +52,7 @@ class ItemFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         // adapter = ViewPagerItemAdapter()
-        binding.pager.adapter = adapter
+        // binding.pager.adapter = adapter
     }
 
     override fun onDestroyView() {

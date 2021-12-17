@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-const val BASE_URL = "https://reqres.in/api/"
+const val BASE_URL = "https://jsonplaceholder.typicode.com/"
 
 @Module
 @InstallIn(SingletonComponent::class)
