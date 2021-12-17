@@ -96,5 +96,5 @@ class ListFragmentTest {
         verify(navController).navigate(ListFragmentDirections.actionToItemFragment(1))
     }
 
-    private fun listMatcher() = RecyclerViewMatcher(R.id.list_view)
+    private fun listMatcher() = RecyclerViewMatcher(R.id.recycler_view_main_items)
 }

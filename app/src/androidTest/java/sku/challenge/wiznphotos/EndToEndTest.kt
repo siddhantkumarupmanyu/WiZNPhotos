@@ -115,7 +115,7 @@ class EndToEndTest {
         activityScenario.close()
     }
 
-    private fun listMatcher() = RecyclerViewMatcher(R.id.list_view)
+    private fun listMatcher() = RecyclerViewMatcher(R.id.recycler_view_main_items)
 
     private fun setupRetrofitClient() {
         val resource = OkHttp3IdlingResource.create("okHttp", okHttpClient)

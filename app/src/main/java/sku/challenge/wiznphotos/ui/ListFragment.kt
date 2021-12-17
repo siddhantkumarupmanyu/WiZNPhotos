@@ -48,7 +48,7 @@ class ListFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
 
-        binding.listView.adapter = ListViewAdapter {
+        binding.recyclerViewMainItems.adapter = ListViewAdapter {
             findNavController().navigate(ListFragmentDirections.actionToItemFragment(it.id))
         }
 
@@ -65,7 +65,7 @@ class ListFragment : Fragment() {
     }
 
     private fun updateList(data: List<PhotoItem>) {
-        (binding.listView.adapter as ListViewAdapter)
+        (binding.recyclerViewMainItems.adapter as ListViewAdapter)
             .submitList(data)
         hideProgressBar()
     }
