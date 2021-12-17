@@ -1,4 +1,11 @@
 
+I know this is not the best structure not the cleanest code. I want to improve it so much
+But it's time.
+The most compelling this I want ot do is to implement viewpager with pagination. But it will take time
+and that I do not have right now. Maybe I will revisit this app
+That pagination with viewPager will actually bring me back. I am sure. And make me implement it
+with a custom indicator.
+
 Challenge Questions?
 - should data be star/delete be done from list too like on front page?
     - not taking it into account; only be done from ItemFragment for now
