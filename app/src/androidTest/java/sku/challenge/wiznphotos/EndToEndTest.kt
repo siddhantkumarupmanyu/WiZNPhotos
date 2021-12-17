@@ -22,10 +22,7 @@ import okhttp3.mockwebserver.MockWebServer
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.Is.`is`
 import org.hamcrest.core.IsNot.not
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
 import org.junit.runner.RunWith
 import sku.challenge.wiznphotos.di.BaseUrl
 import sku.challenge.wiznphotos.di.ConstantsModule
@@ -40,6 +37,7 @@ import javax.inject.Inject
 @RunWith(AndroidJUnit4::class)
 @UninstallModules(ConstantsModule::class)
 @HiltAndroidTest
+@Ignore
 class EndToEndTest {
 
     @get:Rule
