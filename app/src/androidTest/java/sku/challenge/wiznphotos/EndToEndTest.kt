@@ -2,8 +2,11 @@ package sku.challenge.wiznphotos
 
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -16,9 +19,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
-import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.Is.`is`
-import org.junit.*
+import org.hamcrest.core.IsNot.not
+import org.junit.After
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 import sku.challenge.wiznphotos.di.BaseUrl
 import sku.challenge.wiznphotos.di.ConstantsModule
@@ -72,22 +79,40 @@ class EndToEndTest {
 
         activityScenario.close()
 
-
-
         activityScenario = ActivityScenario.launch(MainActivity::class.java)
+
+        delay(100)
+        onView(listMatcher().atPosition(1)).check(matches(hasDescendant(withText("reprehenderit est deserunt velit ipsam"))))
+
+        activityScenario.close()
+
+        assertThat(mockWebServer.requestCount, `is`(1))
+    }
+
+    @Test
+    fun starAndDeleteItem() = runBlocking {
+        val activityScenario = ActivityScenario.launch(MainActivity::class.java)
 
         assertRequest("/photos")
 
         delay(300)
         onView(listMatcher().atPosition(1)).check(matches(hasDescendant(withText("reprehenderit est deserunt velit ipsam"))))
 
+        onView(listMatcher().atPosition(1)).perform(click())
+
+        onView(ViewMatchers.withId(R.id.star_checkbox)).perform(click())
+
+        onView(ViewMatchers.withId(R.id.star_checkbox)).check(matches(ViewMatchers.isChecked()))
+
+        onView(ViewMatchers.withId(R.id.delete_checkbox)).perform(click())
+
+        onView(ViewMatchers.withId(R.id.title_textview)).check(matches(not(withText("reprehenderit est deserunt velit ipsam"))))
+
+        pressBack()
+
+        onView(listMatcher().atPosition(1)).check(matches(not(hasDescendant(withText("reprehenderit est deserunt velit ipsam")))))
+
         activityScenario.close()
-    }
-
-    @Test
-    @Ignore
-    fun starAndDeleteItem() {
-
     }
 
     private fun listMatcher() = RecyclerViewMatcher(R.id.list_view)
@@ -99,7 +124,7 @@ class EndToEndTest {
 
     private fun assertRequest(path: String) {
         val request = mockWebServer.takeRequest(2, TimeUnit.SECONDS)
-        MatcherAssert.assertThat(request.path, `is`(path))
+        assertThat(request.path, `is`(path))
     }
 
 }
