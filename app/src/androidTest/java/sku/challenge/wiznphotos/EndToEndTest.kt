@@ -37,7 +37,6 @@ import javax.inject.Inject
 @RunWith(AndroidJUnit4::class)
 @UninstallModules(ConstantsModule::class)
 @HiltAndroidTest
-@Ignore
 class EndToEndTest {
 
     @get:Rule
@@ -58,7 +57,7 @@ class EndToEndTest {
         setupRetrofitClient()
 
         mockWebServer.start(8080)
-        mockWebServer.enqueueResponse("photos.json")
+        mockWebServer.enqueueResponse("photos-short.json")
     }
 
     @After

@@ -6,6 +6,11 @@ and that I do not have right now. Maybe I will revisit this app
 That pagination with viewPager will actually bring me back. I am sure. And make me implement it
 with a custom indicator.
 
+I actually want to implement pagination in ListFragment too.
+I didn't cause the assignment didn't said anything about it either.
+Also, I wasted so much time trying to make viewpager2 work with pagination, and in the end it didn't even work.
+Maybe next time I visit.
+
 Challenge Questions?
 - should data be star/delete be done from list too like on front page?
     - not taking it into account; only be done from ItemFragment for now
