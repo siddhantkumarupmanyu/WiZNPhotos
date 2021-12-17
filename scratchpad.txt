@@ -1,5 +1,12 @@
 
 
+sorry not going with implementing view pager; KISS
+    - we will if we get time in future
+
+caveats;
+    - should have implemented pagination in ViewPagerItemAdapater;
+        - maybe if I can get a bit more time
+
 i think we can't control how many items recyclerview Bind.
     - going to just bind more than enough.
 

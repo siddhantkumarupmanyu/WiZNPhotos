@@ -3,11 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav.xml"
-    app:startDestination="@id/itemFragment">
+    app:startDestination="@id/listFragment">
 
     <fragment
         android:id="@+id/itemFragment"
-        android:name="sku.challenge.wiznphotos.ItemFragment"
+        android:name="sku.challenge.wiznphotos.ui.ItemFragment"
         android:label="fragment_item"
-        tools:layout="@layout/fragment_item" />
+        tools:layout="@layout/fragment_item" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="sku.challenge.wiznphotos.ui.ListFragment"
+        android:label="ListFragment"
+        tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/actionToItemFragment"
+            app:destination="@id/itemFragment" />
+    </fragment>
 </navigation>
