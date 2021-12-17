@@ -1,6 +1,6 @@
 # https://github.com/ReactiveCircus/FlowBinding/blob/main/.github/workflows/build.yml
 
-name: check
+name: tests
 
 on:
   pull_request:
@@ -35,7 +35,7 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}-new
 
       - name: Run Unit Tests
         run: ./gradlew test
@@ -62,7 +62,7 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}-new
 
       - name: Run instrumentation tests
         uses: reactivecircus/android-emulator-runner@v2
